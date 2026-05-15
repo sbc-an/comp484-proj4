@@ -1,8 +1,10 @@
 const testWrapper = document.querySelector(".test-wrapper");
 const testArea = document.querySelector("#test-area");
-const originText = document.querySelector("#origin-text p").innerHTML;
+let originText = document.querySelector("#origin-text p").innerHTML;
 const resetButton = document.querySelector("#reset");
 const theTimer = document.querySelector(".timer");
+
+const strings = ["The text to test.", "second test string", "randomized text", "1234567890", "the last one"];
 
 let timerRunning = false;
 let time = 0; // centiseconds
@@ -55,4 +57,6 @@ function resetTest()
     clearInterval(timerInterval);
     testArea.value = "";
     testWrapper.style.borderColor = "";
+    document.querySelector("#origin-text p").innerHTML = strings[Math.trunc(Math.random() * 5)];
+    originText = document.querySelector("#origin-text p").innerHTML;
 }
