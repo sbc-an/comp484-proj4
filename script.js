@@ -4,20 +4,55 @@ const originText = document.querySelector("#origin-text p").innerHTML;
 const resetButton = document.querySelector("#reset");
 const theTimer = document.querySelector(".timer");
 
+let timerRunning = false;
+let time = 0; // centiseconds
+let timerInterval;
 
-// Add leading zero to numbers 9 or below (purely for aesthetics):
+// do every 10 miliseconds
+function advanceTime()
+{
+    time ++;
+    theTimer.innerHTML = ""+Math.trunc(time/100000)+Math.trunc(time/10000%10)+":"+Math.trunc(time/1000%10)+Math.trunc(time/100%10)+"."+Math.trunc(time/10%10)+time%10;
+}
 
+// check string match
+function textCompare()
+{
+    console.log(testArea.value);
+    console.log(originText);
+    if (testArea.value == originText)
+    {
+        clearInterval(timerInterval);
+        testWrapper.style.borderColor = "green";
+    }
+    else if (testArea.value == originText.substring(0, testArea.value.length))
+    {
+        testWrapper.style.borderColor = "blue";
+    }
+    else
+    {
+        testWrapper.style.borderColor = "orange";
+    }
+}
 
-// Run a standard minute/second/hundredths timer:
+// say no to busy waiting
+function keyDown()
+{
+    if (!timerRunning)
+    {
+        timerRunning = true;
+        timerInterval = setInterval(advanceTime, 10);
+    }
+    setTimeout(textCompare, 1);
+}
 
-
-// Match the text entered with the provided text on the page:
-
-
-// Start the timer:
-
-
-// Reset everything:
-
-
-// Event listeners for keyboard input and the reset button:
+// reset
+function resetTest()
+{
+    timerRunning = false;
+    time = 0;
+    theTimer.innerHTML = "00:00.00";
+    clearInterval(timerInterval);
+    testArea.value = "";
+    testWrapper.style.borderColor = "";
+}
